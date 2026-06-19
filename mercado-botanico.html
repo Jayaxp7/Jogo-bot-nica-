@@ -319,16 +319,18 @@ body {
 
 .hud-timer {
   position: relative;
-  width: 46px; height: 46px;
+  width: 72px; height: 72px;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 .hud-timer svg { position: absolute; top:0; left:0; transform: rotate(-90deg); }
-.timer-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 4; }
-.timer-fg { fill: none; stroke: var(--amarelo); stroke-width: 4; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; }
+.timer-bg { fill: none; stroke: rgba(255,255,255,0.2); stroke-width: 5; }
+.timer-fg { fill: none; stroke: var(--amarelo); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 1s linear, stroke 0.5s; }
 .timer-num {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   font-family: 'Fredoka One', cursive;
-  font-size: 15px; color: white;
+  font-size: 22px; color: white; font-weight: bold;
 }
 
 /* Progresso */
@@ -844,10 +846,11 @@ body {
 
 @keyframes pulseTimer {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.12); }
+  50% { transform: scale(1.15); }
 }
 .timer-urgente {
-  animation: pulseTimer 0.6s ease-in-out infinite;
+  animation: pulseTimer 0.5s ease-in-out infinite;
+  transform-origin: center;
 }
 </style>
 </head>
@@ -913,7 +916,7 @@ body {
     <div class="hud-nome-tag" id="hud-nome">—</div>
     <div class="hud-moedas">🍃 <span id="hud-pts">0</span></div>
     <div class="hud-timer">
-      <svg class="timer-svg" viewBox="0 0 46 46" width="70" height="70">
+      <svg class="timer-svg" viewBox="0 0 46 46" width="72" height="72">
         <circle class="timer-bg" cx="23" cy="23" r="19"/>
         <circle class="timer-fg" id="timer-arco" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="0"/>
       </svg>
@@ -1242,11 +1245,15 @@ function atualizarTimer() {
   const timerSvg = document.querySelector('.timer-svg');
   document.getElementById('timer-num').textContent = tempoRestante;
   arco.style.strokeDashoffset = circ * (1 - tempoRestante / TEMPO);
+  const timerDiv = document.querySelector('.hud-timer');
   if (tempoRestante <= 10) {
     arco.style.stroke = '#E63946';
-    if (timerSvg) timerSvg.classList.add('timer-urgente');
-  } else {
+    document.getElementById('timer-num').style.color = '#E63946';
+    if (timerDiv) timerDiv.classList.add('timer-urgente');
     if (timerSvg) timerSvg.classList.remove('timer-urgente');
+  } else {
+    if (timerDiv) timerDiv.classList.remove('timer-urgente');
+    document.getElementById('timer-num').style.color = 'white';
     if (tempoRestante <= 20) { arco.style.stroke = '#FFD60A'; }
     else { arco.style.stroke = '#52B788'; }
   }
