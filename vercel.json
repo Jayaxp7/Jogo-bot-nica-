@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/mercado-botanico.html" },
+    { "source": "/ranking", "destination": "/ranking.html" }
+  ]
+}
