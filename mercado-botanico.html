@@ -1122,7 +1122,7 @@ let pontos = 0, acertos = 0, erros = 0;
 let sequencia = 0, maiorSeq = 0;
 let timerInt = null, tempoRestante = 60;
 let jogoAtivo = false;
-const TOTAL = 8, TEMPO = 60;
+const TOTAL = 19, TEMPO = 90;
 // ═══ FIREBASE CONFIG ═══
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -1195,7 +1195,15 @@ async function atualizarRecorde() {
 // ═══ INÍCIO ═══
 function comecarJogo() {
   nomeJogador = document.getElementById('campo-nome').value.trim() || 'Anônimo';
-  rodada = embaralhar(PRODUTOS).slice(0, TOTAL);
+  // Ordenar por dificuldade progressiva
+  const faceis = PRODUTOS.filter(p => p.pts === 10);
+  const medios = PRODUTOS.filter(p => p.pts === 15);
+  const dificeis = PRODUTOS.filter(p => p.pts === 20);
+  rodada = [
+    ...embaralhar(faceis),
+    ...embaralhar(medios),
+    ...embaralhar(dificeis)
+  ];
   indiceAtual = 0; pontos = 0; acertos = 0; erros = 0; sequencia = 0; maiorSeq = 0;
   tempoRestante = TEMPO;
 
