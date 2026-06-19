@@ -1442,6 +1442,14 @@ function renderizarRanking() {
   });
 }
 
+// ═══ EXPOR FUNÇÕES GLOBAIS (necessário para type="module") ═══
+window.comecarJogo    = comecarJogo;
+window.responder      = responder;
+window.irParaRanking  = irParaRanking;
+window.irParaEntrada  = irParaEntrada;
+window.limparRanking  = limparRanking;
+window.reiniciar      = reiniciar;
+
 // ═══ INIT ═══
 atualizarRecorde();
 document.getElementById('img-entrada').src = IMG_NEUTRO;
