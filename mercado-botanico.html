@@ -412,8 +412,8 @@ body {
 .produto-badge {
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, transparent 100%);
-  padding: 20px 12px 10px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.55) 0%, transparent 100%);
+  padding: 12px 12px 8px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -1118,6 +1118,97 @@ body {
   align-items: center;
   justify-content: center;
 }
+
+/* ═══ DUELO CORPO COMPACTO ═══ */
+#t-duelo-jogo {
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+  background: var(--ceu);
+}
+.duelo-corpo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 10px;
+  gap: 8px;
+  overflow: hidden;
+  min-height: 0;
+}
+.duelo-foto-wrap {
+  position: relative;
+  height: 130px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--madeira2);
+  background: #2a1f14;
+  flex-shrink: 0;
+}
+.duelo-foto-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.duelo-foto-badge {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.5);
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.duelo-badge-num {
+  font-size: 9px; color: rgba(255,255,255,0.6);
+  font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+}
+.duelo-badge-nome {
+  font-family: 'Fredoka One', cursive;
+  font-size: 18px; color: #fff; flex: 1;
+}
+.duelo-badge-pts {
+  background: var(--verde); color: #fff;
+  border-radius: 20px; padding: 2px 8px;
+  font-size: 12px; font-weight: 900;
+}
+.duelo-feirante-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.duelo-feirante-img {
+  width: 55px; height: auto;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+.duelo-balao {
+  flex: 1;
+  background: #fffef5;
+  border: 2px solid var(--madeira2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 13px; font-weight: 800;
+  color: var(--texto); line-height: 1.3;
+}
+.duelo-opcoes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+.duelo-opcoes-grid .opcao-btn {
+  height: 100%;
+  padding: 6px;
+  font-size: 12px;
+}
+.duelo-opcoes-grid .opcao-emoji {
+  font-size: 26px;
+}
+.duelo-opcoes-grid .opcao-nome {
+  font-size: 12px;
+}
 </style>
 </head>
 <body>
@@ -1375,7 +1466,7 @@ body {
 
 <!-- ═══ TELA DUELO JOGO ═══ -->
 <div id="t-duelo-jogo" class="tela">
-  <!-- HUD Duelo -->
+  <!-- HUD Duelo compacto -->
   <div class="duelo-hud">
     <div class="duelo-placar">
       <div>
@@ -1388,7 +1479,6 @@ body {
         <div class="duelo-player-pts" id="duelo-p2-pts">0 pts</div>
       </div>
     </div>
-    <!-- Cabo de guerra -->
     <div class="cabo-guerra-wrap" id="cabo-guerra">
       <div class="cabo-guerra-p1" id="cabo-p1" style="width:50%"></div>
       <div class="cabo-guerra-p2" id="cabo-p2" style="width:50%"></div>
@@ -1398,38 +1488,26 @@ body {
     <div class="acertos-counter" id="acertos-counter">0 / 20 acertos</div>
   </div>
 
-  <!-- Área do jogo (reutiliza estrutura do solo) -->
-  <div class="barraca-jogo" id="barraca-duelo">
-    <div class="toldo">
-      <div class="toldo-listras">
-        <div class="toldo-listra"></div><div class="toldo-listra"></div>
-        <div class="toldo-listra"></div><div class="toldo-listra"></div>
-        <div class="toldo-listra"></div><div class="toldo-listra"></div>
-        <div class="toldo-listra"></div><div class="toldo-listra"></div>
+  <!-- Conteúdo compacto sem scroll -->
+  <div class="duelo-corpo">
+    <!-- Foto compacta -->
+    <div class="duelo-foto-wrap">
+      <img id="duelo-produto-img" src="" alt="" class="duelo-foto-img">
+      <div class="duelo-foto-badge">
+        <span id="duelo-produto-num" class="duelo-badge-num"></span>
+        <span id="duelo-produto-nome" class="duelo-badge-nome"></span>
+        <span id="duelo-produto-pts" class="duelo-badge-pts"></span>
       </div>
     </div>
-    <div class="toldo-franja">
-      <div class="franja-item"></div><div class="franja-item"></div>
-      <div class="franja-item"></div><div class="franja-item"></div>
-      <div class="franja-item"></div><div class="franja-item"></div>
-    </div>
-    <div class="card-produto">
-      <div class="produto-img-wrap">
-        <img class="produto-img" id="duelo-produto-img" src="" alt="">
-        <div class="produto-badge">
-          <span id="duelo-produto-num">1 DE 24</span>
-          <span class="produto-nome" id="duelo-produto-nome">...</span>
-          <span class="produto-pts" id="duelo-produto-pts">+10 🌿</span>
-        </div>
-      </div>
-      <div class="feirante-area">
-        <img class="feirante-emoji" src="" id="duelo-feirante" alt="">
-        <div class="balao-fala" id="duelo-balao">
-          De qual <strong style="color:#FF6B2B">parte da planta</strong> vem esse produto? 🌿
-        </div>
+    <!-- Feirante + balão compactos -->
+    <div class="duelo-feirante-row">
+      <img id="duelo-feirante" src="" alt="" class="duelo-feirante-img">
+      <div class="duelo-balao" id="duelo-balao">
+        De qual <strong style="color:#FF6B2B">parte da planta</strong> vem esse produto? 🌿
       </div>
     </div>
-    <div class="opcoes-grid" style="padding-top:8px" id="duelo-opcoes"></div>
+    <!-- Opções -->
+    <div class="duelo-opcoes-grid" id="duelo-opcoes"></div>
   </div>
 </div>
 
