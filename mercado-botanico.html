@@ -2135,13 +2135,15 @@ async function cancelarSala() {
 }
 
 // ═══ LISTENERS DUELO ═══
-document.getElementById('btn-duelo-main')?.addEventListener('click', irParaDuelo);
-document.getElementById('btn-criar-sala')?.addEventListener('click', criarSala);
-document.getElementById('btn-entrar-sala')?.addEventListener('click', entrarNaSala);
-document.getElementById('btn-voltar-lobby')?.addEventListener('click', irParaEntrada);
-document.getElementById('btn-cancelar-sala')?.addEventListener('click', cancelarSala);
-document.getElementById('btn-duelo-novamente')?.addEventListener('click', irParaDuelo);
-document.getElementById('btn-voltar-menu')?.addEventListener('click', irParaEntrada);
+window.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btn-duelo-main')?.addEventListener('click', irParaDuelo);
+  document.getElementById('btn-criar-sala')?.addEventListener('click', criarSala);
+  document.getElementById('btn-entrar-sala')?.addEventListener('click', entrarNaSala);
+  document.getElementById('btn-voltar-lobby')?.addEventListener('click', irParaEntrada);
+  document.getElementById('btn-cancelar-sala')?.addEventListener('click', cancelarSala);
+  document.getElementById('btn-duelo-novamente')?.addEventListener('click', irParaDuelo);
+  document.getElementById('btn-voltar-menu')?.addEventListener('click', irParaEntrada);
+});
 
 // ═══ EXPOR FUNÇÕES GLOBAIS (necessário para type="module") ═══
 window.irParaDuelo    = irParaDuelo;
