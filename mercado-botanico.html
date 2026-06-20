@@ -1511,7 +1511,7 @@ let jogoAtivo = false;
 const TOTAL = 24, TEMPO = 60;
 // ═══ FIREBASE CONFIG ═══
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, onSnapshot, deleteDoc, doc, where, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, getDoc, setDoc, query, orderBy, limit, onSnapshot, deleteDoc, doc, where, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB4IXXIbNHwvBDL1ZDNABVzejo7qvyBdpU",
@@ -1880,11 +1880,11 @@ async function criarSala() {
   meuSlot = 'p1';
 
   try {
-    await addDoc(collection(db, 'salas'), {
+    await setDoc(doc(db, 'salas', codigo), {
       id: codigo,
       p1: nome, p2: null,
       pts1: 0, pts2: 0,
-      cabo: 0, // -10 a +10, positivo = p1 vencendo
+      cabo: 0,
       acertosTotal: 0,
       status: 'aguardando',
       ts: Date.now()
@@ -1908,17 +1908,17 @@ async function entrarNaSala() {
   if (!codigo || codigo.length < 4) { alert('Digite o código da sala!'); return; }
 
   try {
-    const q = query(collection(db, 'salas'), where('id', '==', codigo), where('status', '==', 'aguardando'));
-    const snap = await getDocs(q);
-    if (snap.empty) { alert('Sala não encontrada ou já em andamento!'); return; }
-
-    const docRef = snap.docs[0].ref;
+    const docRef = doc(db, 'salas', codigo);
+    const snap = await getDoc(docRef);
+    if (!snap.exists() || snap.data().status !== 'aguardando') {
+      alert('Sala não encontrada ou já em andamento!'); return;
+    }
     await updateDoc(docRef, { p2: nome, status: 'pronto' });
 
     salaId = codigo;
     meuSlot = 'p2';
     document.getElementById('sala-codigo-display').textContent = codigo;
-    document.getElementById('slot-p1-nome').textContent = snap.docs[0].data().p1;
+    document.getElementById('slot-p1-nome').textContent = snap.data().p1;
     document.getElementById('slot-p2-nome').textContent = nome;
     document.getElementById('slot-p2').classList.add('conectado');
     document.getElementById('espera-status').textContent = 'Adversário encontrado! Iniciando...';
@@ -1931,11 +1931,11 @@ async function entrarNaSala() {
 
 function escutarSala(codigo) {
   if (salaListener) salaListener();
-  const q = query(collection(db, 'salas'), where('id', '==', codigo));
-  salaListener = onSnapshot(q, (snap) => {
-    if (snap.empty) return;
-    const sala = snap.docs[0].data();
-    const docId = snap.docs[0].id;
+  const docRef = doc(db, 'salas', codigo);
+  salaListener = onSnapshot(docRef, (snap) => {
+    if (!snap.exists()) return;
+    const sala = snap.data();
+    const docId = snap.id;
 
     // P1 vê p2 aparecer
     if (meuSlot === 'p1' && sala.p2 && sala.status === 'pronto') {
@@ -1964,10 +1964,10 @@ function escutarSala(codigo) {
 function iniciarDuelo(sala, docId) {
   if (salaListener) salaListener();
   // Escutar atualizações durante o jogo
-  const q = query(collection(db, 'salas'), where('id', '==', salaId));
-  salaListener = onSnapshot(q, (snap) => {
-    if (snap.empty) return;
-    const s = snap.docs[0].data();
+  const docRef2 = doc(db, 'salas', salaId);
+  salaListener = onSnapshot(docRef2, (snap) => {
+    if (!snap.exists()) return;
+    const s = snap.data();
     atualizarCaboUI(s);
     if (s.acertosTotal >= TOTAL_ACERTOS_DUELO && dueloAtivo) {
       dueloAtivo = false;
@@ -1989,10 +1989,7 @@ function iniciarDuelo(sala, docId) {
 
   // Atualizar status da sala para jogando
   if (meuSlot === 'p1') {
-    const q2 = query(collection(db, 'salas'), where('id', '==', salaId));
-    getDocs(q2).then(snap => {
-      if (!snap.empty) updateDoc(snap.docs[0].ref, { status: 'jogando', pts1: 0, pts2: 0, cabo: 0, acertosTotal: 0 });
-    });
+    updateDoc(doc(db, 'salas', salaId), { status: 'jogando', pts1: 0, pts2: 0, cabo: 0, acertosTotal: 0 });
   }
 
   mostrarTela('t-duelo-jogo');
@@ -2039,11 +2036,10 @@ async function responderDuelo(acertou, produto) {
 
   // Atualizar Firestore
   try {
-    const q = query(collection(db, 'salas'), where('id', '==', salaId));
-    const snap = await getDocs(q);
-    if (!snap.empty) {
-      const sala = snap.docs[0].data();
-      const ref = snap.docs[0].ref;
+    const ref = doc(db, 'salas', salaId);
+    const snap = await getDoc(ref);
+    if (snap.exists()) {
+      const sala = snap.data();
       const delta = acertou ? 1 : -1; // +1 acerto, -1 erro
       const novoCabo = Math.max(-10, Math.min(10,
         (sala.cabo || 0) + (meuSlot === 'p1' ? delta : -delta)
@@ -2122,10 +2118,7 @@ function finalizarDuelo(sala) {
 
   // Limpar sala do Firestore
   try {
-    const q = query(collection(db, 'salas'), where('id', '==', salaId));
-    getDocs(q).then(snap => {
-      snap.docs.forEach(d => deleteDoc(d.ref));
-    });
+    deleteDoc(doc(db, 'salas', salaId));
   } catch(e) {}
   salaId = null;
 }
@@ -2133,9 +2126,7 @@ function finalizarDuelo(sala) {
 async function cancelarSala() {
   if (salaId) {
     try {
-      const q = query(collection(db, 'salas'), where('id', '==', salaId));
-      const snap = await getDocs(q);
-      snap.docs.forEach(d => deleteDoc(d.ref));
+      await deleteDoc(doc(db, 'salas', salaId));
     } catch(e) {}
     salaId = null;
   }
