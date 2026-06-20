@@ -1157,7 +1157,7 @@ body {
         <input type="text" class="campo-nome" id="campo-nome" placeholder="Seu nome aqui..." maxlength="20" autocomplete="off">
       </div>
       <button class="btn-jogar" onclick="comecarJogo()">🛒 ENTRAR NA FEIRA!</button>
-      <button class="btn-duelo" onclick="irParaDuelo()">⚔️ MODO DUELO</button>
+      <button class="btn-duelo" id="btn-duelo-main">⚔️ MODO DUELO</button>
       <button class="btn-ranking-link" onclick="irParaRanking()">🏆 Ver quem manda na feira</button>
     </div>
   </div>
@@ -1338,12 +1338,12 @@ body {
   <div class="duelo-titulo">⚔️ Modo Duelo</div>
   <div class="duelo-sub">Desafie um colega em tempo real!</div>
   <div class="duelo-card">
-    <button class="btn-criar-sala" onclick="criarSala()">⚔️ Criar Sala</button>
+    <button class="btn-criar-sala" id="btn-criar-sala">⚔️ Criar Sala</button>
     <div class="duelo-or">ou</div>
     <input class="duelo-input" id="input-codigo-sala" placeholder="Digite o código" maxlength="8" autocomplete="off">
-    <button class="btn-entrar-sala" onclick="entrarNaSala()">🚪 Entrar na Sala</button>
+    <button class="btn-entrar-sala" id="btn-entrar-sala">🚪 Entrar na Sala</button>
   </div>
-  <button class="btn-voltar-lobby" onclick="irParaEntrada()">← Voltar</button>
+  <button class="btn-voltar-lobby" id="btn-voltar-lobby">← Voltar</button>
 </div>
 
 <!-- ═══ TELA DUELO ESPERA ═══ -->
@@ -1361,7 +1361,7 @@ body {
     <div class="jogador-slot-nome" id="slot-p2-nome">?</div>
     <div class="jogador-slot-status">⏳ Aguardando...</div>
   </div>
-  <button class="btn-voltar-lobby" onclick="cancelarSala()">✕ Cancelar</button>
+  <button class="btn-voltar-lobby" id="btn-cancelar-sala">✕ Cancelar</button>
 </div>
 
 <!-- ═══ TELA DUELO JOGO ═══ -->
@@ -1440,8 +1440,8 @@ body {
       <div class="duelo-resultado-player-pts" id="duelo-res-p2-pts">0</div>
     </div>
   </div>
-  <button class="btn-duelo-novamente" onclick="irParaDuelo()">⚔️ Novo Duelo</button>
-  <button class="btn-voltar-lobby" onclick="irParaEntrada()">← Menu Principal</button>
+  <button class="btn-duelo-novamente" id="btn-duelo-novamente">⚔️ Novo Duelo</button>
+  <button class="btn-voltar-lobby" id="btn-voltar-menu">← Menu Principal</button>
 </div>
 
 <!-- Flash -->
@@ -2133,6 +2133,15 @@ async function cancelarSala() {
   if (salaListener) { salaListener(); salaListener = null; }
   irParaEntrada();
 }
+
+// ═══ LISTENERS DUELO ═══
+document.getElementById('btn-duelo-main')?.addEventListener('click', irParaDuelo);
+document.getElementById('btn-criar-sala')?.addEventListener('click', criarSala);
+document.getElementById('btn-entrar-sala')?.addEventListener('click', entrarNaSala);
+document.getElementById('btn-voltar-lobby')?.addEventListener('click', irParaEntrada);
+document.getElementById('btn-cancelar-sala')?.addEventListener('click', cancelarSala);
+document.getElementById('btn-duelo-novamente')?.addEventListener('click', irParaDuelo);
+document.getElementById('btn-voltar-menu')?.addEventListener('click', irParaEntrada);
 
 // ═══ EXPOR FUNÇÕES GLOBAIS (necessário para type="module") ═══
 window.irParaDuelo    = irParaDuelo;
