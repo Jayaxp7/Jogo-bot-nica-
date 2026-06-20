@@ -852,6 +852,263 @@ body {
   animation: pulseTimer 0.5s ease-in-out infinite;
   transform-origin: center;
 }
+
+/* ═══ BOTÃO DUELO ═══ */
+.btn-duelo {
+  background: linear-gradient(135deg, #E63946, #c1121f);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 24px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 0 #7d0000;
+  transition: all 0.15s;
+}
+.btn-duelo:active { transform: translateY(3px); box-shadow: 0 1px 0 #7d0000; }
+
+/* ═══ TELA DUELO LOBBY ═══ */
+#t-duelo-lobby {
+  background: linear-gradient(180deg, #1a0a2e 0%, #16213e 60%, #0f3460 100%);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 20px; min-height: 100vh;
+}
+.duelo-titulo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #FFD60A;
+  text-align: center;
+  margin-bottom: 6px;
+  text-shadow: 0 2px 10px rgba(255,214,10,0.4);
+}
+.duelo-sub {
+  color: #aaa; font-size: 0.9rem; text-align: center; margin-bottom: 24px;
+}
+.duelo-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 24px;
+  width: 100%; max-width: 340px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.duelo-or {
+  text-align: center; color: #666; font-weight: 800;
+  font-size: 0.85rem; position: relative;
+}
+.duelo-or::before, .duelo-or::after {
+  content: ''; position: absolute; top: 50%; width: 40%;
+  height: 1px; background: rgba(255,255,255,0.1);
+}
+.duelo-or::before { left: 0; }
+.duelo-or::after { right: 0; }
+.duelo-input {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  outline: none;
+}
+.duelo-input::placeholder { color: #555; letter-spacing: 1px; text-transform: none; }
+.btn-criar-sala {
+  background: linear-gradient(135deg, #52B788, #2D6A4F);
+  color: white; border: none; border-radius: 14px;
+  padding: 14px; font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; cursor: pointer; width: 100%;
+  box-shadow: 0 4px 0 #1a3a2a;
+  transition: all 0.15s;
+}
+.btn-criar-sala:active { transform: translateY(3px); box-shadow: 0 1px 0 #1a3a2a; }
+.btn-entrar-sala {
+  background: linear-gradient(135deg, #E63946, #c1121f);
+  color: white; border: none; border-radius: 14px;
+  padding: 14px; font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; cursor: pointer; width: 100%;
+  box-shadow: 0 4px 0 #7d0000;
+  transition: all 0.15s;
+}
+.btn-entrar-sala:active { transform: translateY(3px); box-shadow: 0 1px 0 #7d0000; }
+.btn-voltar-lobby {
+  background: transparent; border: 1px solid rgba(255,255,255,0.2);
+  color: #aaa; border-radius: 12px; padding: 10px 20px;
+  font-family: 'Nunito', sans-serif; font-weight: 700;
+  cursor: pointer; margin-top: 12px; font-size: 0.9rem;
+}
+
+/* ═══ TELA DUELO ESPERA ═══ */
+#t-duelo-espera {
+  background: linear-gradient(180deg, #1a0a2e 0%, #16213e 100%);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 20px; min-height: 100vh; gap: 20px;
+}
+.sala-codigo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3rem;
+  color: #FFD60A;
+  letter-spacing: 6px;
+  text-shadow: 0 0 20px rgba(255,214,10,0.5);
+}
+.sala-label {
+  color: #aaa; font-size: 0.85rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+}
+.espera-status {
+  color: white; font-size: 1rem; font-weight: 700;
+  text-align: center; line-height: 1.6;
+}
+.espera-dot {
+  display: inline-block;
+  animation: dotPulse 1.4s infinite;
+}
+.espera-dot:nth-child(2) { animation-delay: 0.2s; }
+.espera-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%,80%,100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+.jogador-slot {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 16px 24px;
+  text-align: center;
+  width: 100%; max-width: 300px;
+}
+.jogador-slot.conectado { border-color: #52B788; background: rgba(82,183,136,0.1); }
+.jogador-slot-nome { font-family: 'Fredoka One', cursive; font-size: 1.2rem; }
+.jogador-slot-status { font-size: 0.8rem; color: #aaa; margin-top: 4px; }
+
+/* ═══ TELA DUELO JOGO ═══ */
+#t-duelo-jogo {
+  background: var(--ceu);
+  display: flex; flex-direction: column;
+  min-height: 100vh;
+}
+.duelo-hud {
+  background: #1a0a2e;
+  padding: 10px 14px;
+  border-bottom: 3px solid #E63946;
+  position: sticky; top: 0; z-index: 30;
+}
+.duelo-placar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.duelo-player-nome {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.9rem;
+  color: white;
+  max-width: 100px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.duelo-player-pts {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: #FFD60A;
+}
+.duelo-vs { color: #E63946; font-family: 'Fredoka One', cursive; font-size: 1rem; }
+
+/* Barra cabo de guerra */
+.cabo-guerra-wrap {
+  position: relative;
+  height: 28px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+.cabo-guerra-p1 {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, #52B788, #2D6A4F);
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 12px 0 0 12px;
+}
+.cabo-guerra-p2 {
+  position: absolute; right: 0; top: 0; bottom: 0;
+  background: linear-gradient(90deg, #c1121f, #E63946);
+  transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 0 12px 12px 0;
+}
+.cabo-guerra-meio {
+  position: absolute; left: 50%; top: -2px; bottom: -2px;
+  width: 4px; background: white; transform: translateX(-50%);
+  z-index: 2; border-radius: 2px;
+}
+.cabo-guerra-nó {
+  position: absolute; top: 50%; transform: translate(-50%, -50%);
+  width: 22px; height: 22px; background: white;
+  border-radius: 50%; z-index: 3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: left 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.acertos-counter {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #aaa;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+/* ═══ TELA DUELO RESULTADO ═══ */
+#t-duelo-resultado {
+  background: linear-gradient(180deg, #1a0a2e 0%, #16213e 100%);
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 24px; min-height: 100vh; gap: 16px;
+  text-align: center;
+}
+.duelo-resultado-titulo {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  color: #FFD60A;
+}
+.duelo-resultado-vencedor {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: white;
+}
+.duelo-resultado-placar {
+  display: flex; gap: 20px; align-items: center;
+}
+.duelo-resultado-player {
+  background: rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 16px 20px;
+  min-width: 100px;
+}
+.duelo-resultado-player.venceu {
+  border: 2px solid #FFD60A;
+  background: rgba(255,214,10,0.1);
+}
+.duelo-resultado-player-nome {
+  font-size: 0.85rem; color: #aaa; font-weight: 700;
+}
+.duelo-resultado-player-pts {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem; color: #FFD60A;
+}
+.btn-duelo-novamente {
+  background: linear-gradient(135deg, #E63946, #c1121f);
+  color: white; border: none; border-radius: 14px;
+  padding: 14px 28px; font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem; cursor: pointer; margin-top: 8px;
+  box-shadow: 0 4px 0 #7d0000;
+}
 </style>
 </head>
 <body>
@@ -900,6 +1157,7 @@ body {
         <input type="text" class="campo-nome" id="campo-nome" placeholder="Seu nome aqui..." maxlength="20" autocomplete="off">
       </div>
       <button class="btn-jogar" onclick="comecarJogo()">🛒 ENTRAR NA FEIRA!</button>
+      <button class="btn-duelo" onclick="irParaDuelo()">⚔️ MODO DUELO</button>
       <button class="btn-ranking-link" onclick="irParaRanking()">🏆 Ver quem manda na feira</button>
     </div>
   </div>
@@ -1074,6 +1332,118 @@ body {
   </div>
 </div>
 
+
+<!-- ═══ TELA DUELO LOBBY ═══ -->
+<div id="t-duelo-lobby" class="tela">
+  <div class="duelo-titulo">⚔️ Modo Duelo</div>
+  <div class="duelo-sub">Desafie um colega em tempo real!</div>
+  <div class="duelo-card">
+    <button class="btn-criar-sala" onclick="criarSala()">⚔️ Criar Sala</button>
+    <div class="duelo-or">ou</div>
+    <input class="duelo-input" id="input-codigo-sala" placeholder="Digite o código" maxlength="8" autocomplete="off">
+    <button class="btn-entrar-sala" onclick="entrarNaSala()">🚪 Entrar na Sala</button>
+  </div>
+  <button class="btn-voltar-lobby" onclick="irParaEntrada()">← Voltar</button>
+</div>
+
+<!-- ═══ TELA DUELO ESPERA ═══ -->
+<div id="t-duelo-espera" class="tela">
+  <div class="sala-label">Código da sala</div>
+  <div class="sala-codigo" id="sala-codigo-display">----</div>
+  <div class="espera-status" id="espera-status">
+    Aguardando adversário<span class="espera-dot">.</span><span class="espera-dot">.</span><span class="espera-dot">.</span>
+  </div>
+  <div class="jogador-slot conectado">
+    <div class="jogador-slot-nome" id="slot-p1-nome">—</div>
+    <div class="jogador-slot-status">✅ Conectado</div>
+  </div>
+  <div class="jogador-slot" id="slot-p2">
+    <div class="jogador-slot-nome" id="slot-p2-nome">?</div>
+    <div class="jogador-slot-status">⏳ Aguardando...</div>
+  </div>
+  <button class="btn-voltar-lobby" onclick="cancelarSala()">✕ Cancelar</button>
+</div>
+
+<!-- ═══ TELA DUELO JOGO ═══ -->
+<div id="t-duelo-jogo" class="tela">
+  <!-- HUD Duelo -->
+  <div class="duelo-hud">
+    <div class="duelo-placar">
+      <div>
+        <div class="duelo-player-nome" id="duelo-p1-nome">Você</div>
+        <div class="duelo-player-pts" id="duelo-p1-pts">0 pts</div>
+      </div>
+      <div class="duelo-vs">⚔️</div>
+      <div style="text-align:right">
+        <div class="duelo-player-nome" id="duelo-p2-nome">Adversário</div>
+        <div class="duelo-player-pts" id="duelo-p2-pts">0 pts</div>
+      </div>
+    </div>
+    <!-- Cabo de guerra -->
+    <div class="cabo-guerra-wrap" id="cabo-guerra">
+      <div class="cabo-guerra-p1" id="cabo-p1" style="width:50%"></div>
+      <div class="cabo-guerra-p2" id="cabo-p2" style="width:50%"></div>
+      <div class="cabo-guerra-meio"></div>
+      <div class="cabo-guerra-nó" id="cabo-no" style="left:50%">🪢</div>
+    </div>
+    <div class="acertos-counter" id="acertos-counter">0 / 20 acertos</div>
+  </div>
+
+  <!-- Área do jogo (reutiliza estrutura do solo) -->
+  <div class="barraca" id="barraca-duelo">
+    <div class="toldo">
+      <div class="toldo-listras">
+        <div class="toldo-listra"></div><div class="toldo-listra"></div>
+        <div class="toldo-listra"></div><div class="toldo-listra"></div>
+        <div class="toldo-listra"></div><div class="toldo-listra"></div>
+        <div class="toldo-listra"></div><div class="toldo-listra"></div>
+      </div>
+    </div>
+    <div class="toldo-franja">
+      <div class="franja-item"></div><div class="franja-item"></div>
+      <div class="franja-item"></div><div class="franja-item"></div>
+      <div class="franja-item"></div><div class="franja-item"></div>
+    </div>
+    <div class="card-produto">
+      <div class="produto-img-wrap">
+        <img class="produto-img" id="duelo-produto-img" src="" alt="">
+        <div class="produto-badge">
+          <span id="duelo-produto-num">1 DE 24</span>
+          <span class="produto-nome" id="duelo-produto-nome">...</span>
+          <span class="produto-pts" id="duelo-produto-pts">+10 🌿</span>
+        </div>
+      </div>
+      <div class="feirante-area">
+        <img class="feirante-emoji" src="" id="duelo-feirante" alt="">
+        <div class="balao-fala" id="duelo-balao">
+          De qual <strong style="color:#FF6B2B">parte da planta</strong> vem esse produto? 🌿
+        </div>
+      </div>
+    </div>
+    <div class="opcoes-grid" id="duelo-opcoes"></div>
+  </div>
+</div>
+
+<!-- ═══ TELA DUELO RESULTADO ═══ -->
+<div id="t-duelo-resultado" class="tela">
+  <div style="font-size:3rem" id="duelo-res-emoji">🏆</div>
+  <div class="duelo-resultado-titulo" id="duelo-res-titulo">Fim do Duelo!</div>
+  <div class="duelo-resultado-vencedor" id="duelo-res-vencedor"></div>
+  <div class="duelo-resultado-placar">
+    <div class="duelo-resultado-player" id="duelo-res-p1">
+      <div class="duelo-resultado-player-nome" id="duelo-res-p1-nome">P1</div>
+      <div class="duelo-resultado-player-pts" id="duelo-res-p1-pts">0</div>
+    </div>
+    <div style="font-size:1.5rem">⚔️</div>
+    <div class="duelo-resultado-player" id="duelo-res-p2">
+      <div class="duelo-resultado-player-nome" id="duelo-res-p2-nome">P2</div>
+      <div class="duelo-resultado-player-pts" id="duelo-res-p2-pts">0</div>
+    </div>
+  </div>
+  <button class="btn-duelo-novamente" onclick="irParaDuelo()">⚔️ Novo Duelo</button>
+  <button class="btn-voltar-lobby" onclick="irParaEntrada()">← Menu Principal</button>
+</div>
+
 <!-- Flash -->
 <div class="flash-overlay" id="flash">
   <div class="flash-balao" id="flash-balao">
@@ -1141,7 +1511,7 @@ let jogoAtivo = false;
 const TOTAL = 24, TEMPO = 60;
 // ═══ FIREBASE CONFIG ═══
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, onSnapshot, deleteDoc, doc, where, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyB4IXXIbNHwvBDL1ZDNABVzejo7qvyBdpU",
@@ -1476,7 +1846,308 @@ function renderizarRanking() {
   });
 }
 
+
+// ═══════════════════════════════════════════════
+// MODO DUELO
+// ═══════════════════════════════════════════════
+let salaId = null;
+let meuSlot = null; // 'p1' ou 'p2'
+let salaListener = null;
+let dueloRodada = [];
+let dueloIndice = 0;
+let dueloPts = 0;
+let dueloAcertosTotal = 0;
+let dueloAtivo = false;
+
+const TOTAL_ACERTOS_DUELO = 20;
+
+function gerarCodigo() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+function irParaDuelo() {
+  const nome = document.getElementById('campo-nome').value.trim() || 'Anônimo';
+  mostrarTela('t-duelo-lobby');
+}
+
+async function criarSala() {
+  const nome = document.getElementById('campo-nome').value.trim() || 'Anônimo';
+  const codigo = gerarCodigo();
+  salaId = codigo;
+  meuSlot = 'p1';
+
+  try {
+    await addDoc(collection(db, 'salas'), {
+      id: codigo,
+      p1: nome, p2: null,
+      pts1: 0, pts2: 0,
+      cabo: 0, // -10 a +10, positivo = p1 vencendo
+      acertosTotal: 0,
+      status: 'aguardando',
+      ts: Date.now()
+    });
+
+    document.getElementById('sala-codigo-display').textContent = codigo;
+    document.getElementById('slot-p1-nome').textContent = nome;
+    document.getElementById('slot-p2-nome').textContent = '?';
+    document.getElementById('slot-p2').classList.remove('conectado');
+    document.getElementById('espera-status').innerHTML = 'Aguardando adversário<span class="espera-dot">.</span><span class="espera-dot">.</span><span class="espera-dot">.</span>';
+    mostrarTela('t-duelo-espera');
+    escutarSala(codigo);
+  } catch(e) {
+    alert('Erro ao criar sala: ' + e.message);
+  }
+}
+
+async function entrarNaSala() {
+  const nome = document.getElementById('campo-nome').value.trim() || 'Anônimo';
+  const codigo = document.getElementById('input-codigo-sala').value.trim().toUpperCase();
+  if (!codigo || codigo.length < 4) { alert('Digite o código da sala!'); return; }
+
+  try {
+    const q = query(collection(db, 'salas'), where('id', '==', codigo), where('status', '==', 'aguardando'));
+    const snap = await getDocs(q);
+    if (snap.empty) { alert('Sala não encontrada ou já em andamento!'); return; }
+
+    const docRef = snap.docs[0].ref;
+    await updateDoc(docRef, { p2: nome, status: 'pronto' });
+
+    salaId = codigo;
+    meuSlot = 'p2';
+    document.getElementById('sala-codigo-display').textContent = codigo;
+    document.getElementById('slot-p1-nome').textContent = snap.docs[0].data().p1;
+    document.getElementById('slot-p2-nome').textContent = nome;
+    document.getElementById('slot-p2').classList.add('conectado');
+    document.getElementById('espera-status').textContent = 'Adversário encontrado! Iniciando...';
+    mostrarTela('t-duelo-espera');
+    escutarSala(codigo);
+  } catch(e) {
+    alert('Erro ao entrar na sala: ' + e.message);
+  }
+}
+
+function escutarSala(codigo) {
+  if (salaListener) salaListener();
+  const q = query(collection(db, 'salas'), where('id', '==', codigo));
+  salaListener = onSnapshot(q, (snap) => {
+    if (snap.empty) return;
+    const sala = snap.docs[0].data();
+    const docId = snap.docs[0].id;
+
+    // P1 vê p2 aparecer
+    if (meuSlot === 'p1' && sala.p2 && sala.status === 'pronto') {
+      document.getElementById('slot-p2-nome').textContent = sala.p2;
+      document.getElementById('slot-p2').classList.add('conectado');
+      document.getElementById('espera-status').textContent = sala.p2 + ' entrou! Iniciando...';
+      setTimeout(() => iniciarDuelo(sala, docId), 1500);
+    }
+
+    // P2 aguarda início
+    if (meuSlot === 'p2' && sala.status === 'pronto') {
+      setTimeout(() => iniciarDuelo(sala, docId), 1500);
+    }
+
+    // Atualizar cabo de guerra durante jogo
+    if (sala.status === 'jogando' && dueloAtivo) {
+      atualizarCaboUI(sala);
+      // Verificar fim do duelo
+      if (sala.acertosTotal >= TOTAL_ACERTOS_DUELO) {
+        finalizarDuelo(sala);
+      }
+    }
+  });
+}
+
+function iniciarDuelo(sala, docId) {
+  if (salaListener) salaListener();
+  // Escutar atualizações durante o jogo
+  const q = query(collection(db, 'salas'), where('id', '==', salaId));
+  salaListener = onSnapshot(q, (snap) => {
+    if (snap.empty) return;
+    const s = snap.docs[0].data();
+    atualizarCaboUI(s);
+    if (s.acertosTotal >= TOTAL_ACERTOS_DUELO && dueloAtivo) {
+      dueloAtivo = false;
+      setTimeout(() => finalizarDuelo(s), 500);
+    }
+  });
+
+  dueloRodada = embaralhar(PRODUTOS);
+  dueloIndice = 0;
+  dueloPts = 0;
+  dueloAcertosTotal = 0;
+  dueloAtivo = true;
+
+  const nomeP1 = sala.p1;
+  const nomeP2 = sala.p2;
+  document.getElementById('duelo-p1-nome').textContent = meuSlot === 'p1' ? nomeP1 + ' (você)' : nomeP1;
+  document.getElementById('duelo-p2-nome').textContent = meuSlot === 'p2' ? nomeP2 + ' (você)' : nomeP2;
+  document.getElementById('duelo-feirante').src = IMG_NEUTRO;
+
+  // Atualizar status da sala para jogando
+  if (meuSlot === 'p1') {
+    const q2 = query(collection(db, 'salas'), where('id', '==', salaId));
+    getDocs(q2).then(snap => {
+      if (!snap.empty) updateDoc(snap.docs[0].ref, { status: 'jogando', pts1: 0, pts2: 0, cabo: 0, acertosTotal: 0 });
+    });
+  }
+
+  mostrarTela('t-duelo-jogo');
+  carregarProdutoDuelo();
+}
+
+function carregarProdutoDuelo() {
+  if (!dueloAtivo) return;
+  const produto = dueloRodada[dueloIndice % dueloRodada.length];
+
+  document.getElementById('duelo-produto-img').src = produto.img;
+  document.getElementById('duelo-produto-nome').textContent = produto.nome;
+  document.getElementById('duelo-produto-pts').textContent = '+' + produto.pts + ' 🌿';
+  document.getElementById('duelo-produto-num').textContent = (dueloIndice + 1) + ' DE 24';
+  document.getElementById('duelo-balao').innerHTML = 'De qual <strong style="color:#FF6B2B">parte da planta</strong> vem esse produto? 🌿';
+  document.getElementById('duelo-feirante').src = IMG_NEUTRO;
+
+  const outras = embaralhar(PARTES_TODAS.filter(p => p.nome !== produto.parte)).slice(0, 3);
+  const opcoes = embaralhar([{ nome: produto.parte }, ...outras]);
+
+  const grid = document.getElementById('duelo-opcoes');
+  grid.innerHTML = '';
+  opcoes.forEach(op => {
+    const btn = document.createElement('button');
+    btn.className = 'opcao-btn';
+    const parteInfo = PARTES_TODAS.find(p => p.nome === op.nome);
+    btn.innerHTML = `<span class="opcao-emoji">${parteInfo ? parteInfo.emoji : '🌿'}</span><span class="opcao-nome">${op.nome}</span>`;
+    btn.onclick = () => responderDuelo(op.nome === produto.parte, produto);
+    grid.appendChild(btn);
+  });
+}
+
+async function responderDuelo(acertou, produto) {
+  if (!dueloAtivo) return;
+  const btns = document.querySelectorAll('#duelo-opcoes .opcao-btn');
+  btns.forEach(b => b.disabled = true);
+
+  document.getElementById('duelo-feirante').src = acertou ? IMG_FELIZ : IMG_NEUTRO;
+
+  if (acertou) {
+    dueloPts += produto.pts;
+    document.getElementById('duelo-feirante').src = IMG_FELIZ;
+  }
+
+  // Atualizar Firestore
+  try {
+    const q = query(collection(db, 'salas'), where('id', '==', salaId));
+    const snap = await getDocs(q);
+    if (!snap.empty) {
+      const sala = snap.docs[0].data();
+      const ref = snap.docs[0].ref;
+      const delta = acertou ? 1 : -1; // +1 acerto, -1 erro
+      const novoCabo = Math.max(-10, Math.min(10,
+        (sala.cabo || 0) + (meuSlot === 'p1' ? delta : -delta)
+      ));
+      const novoTotal = (sala.acertosTotal || 0) + 1;
+      const update = { acertosTotal: novoTotal, cabo: novoCabo };
+      if (meuSlot === 'p1') update.pts1 = (sala.pts1 || 0) + (acertou ? produto.pts : 0);
+      else update.pts2 = (sala.pts2 || 0) + (acertou ? produto.pts : 0);
+      await updateDoc(ref, update);
+    }
+  } catch(e) { console.error(e); }
+
+  // Atualizar UI local
+  const pts = acertou ? dueloPts : dueloPts;
+  document.getElementById(meuSlot === 'p1' ? 'duelo-p1-pts' : 'duelo-p2-pts').textContent = dueloPts + ' pts';
+
+  dueloIndice++;
+  setTimeout(() => {
+    if (dueloAtivo) carregarProdutoDuelo();
+  }, 900);
+}
+
+function atualizarCaboUI(sala) {
+  const cabo = sala.cabo || 0; // -10 a +10
+  const pct = ((cabo + 10) / 20) * 100; // 0% = p2 total, 100% = p1 total
+  const pctP1 = pct;
+  const pctP2 = 100 - pct;
+
+  document.getElementById('cabo-p1').style.width = pctP1 + '%';
+  document.getElementById('cabo-p2').style.width = pctP2 + '%';
+  document.getElementById('cabo-no').style.left = pctP1 + '%';
+
+  const total = sala.acertosTotal || 0;
+  document.getElementById('acertos-counter').textContent = total + ' / ' + TOTAL_ACERTOS_DUELO + ' acertos';
+
+  // Pontos
+  document.getElementById('duelo-p1-pts').textContent = (sala.pts1 || 0) + ' pts';
+  document.getElementById('duelo-p2-pts').textContent = (sala.pts2 || 0) + ' pts';
+}
+
+function finalizarDuelo(sala) {
+  dueloAtivo = false;
+  if (salaListener) { salaListener(); salaListener = null; }
+
+  const cabo = sala.cabo || 0;
+  const pts1 = sala.pts1 || 0;
+  const pts2 = sala.pts2 || 0;
+
+  let titulo, vencedor, emoji;
+  if (cabo > 0) {
+    titulo = sala.p1 + ' venceu!';
+    emoji = meuSlot === 'p1' ? '🏆' : '😢';
+    vencedor = '🪢 A corda foi para ' + sala.p1 + '!';
+  } else if (cabo < 0) {
+    titulo = sala.p2 + ' venceu!';
+    emoji = meuSlot === 'p2' ? '🏆' : '😢';
+    vencedor = '🪢 A corda foi para ' + sala.p2 + '!';
+  } else {
+    titulo = 'Empate!';
+    emoji = '🤝';
+    vencedor = 'A corda ficou no centro!';
+  }
+
+  document.getElementById('duelo-res-emoji').textContent = emoji;
+  document.getElementById('duelo-res-titulo').textContent = titulo;
+  document.getElementById('duelo-res-vencedor').textContent = vencedor;
+  document.getElementById('duelo-res-p1-nome').textContent = sala.p1;
+  document.getElementById('duelo-res-p1-pts').textContent = pts1 + ' pts';
+  document.getElementById('duelo-res-p2-nome').textContent = sala.p2;
+  document.getElementById('duelo-res-p2-pts').textContent = pts2 + ' pts';
+
+  if (cabo > 0) document.getElementById('duelo-res-p1').classList.add('venceu');
+  else if (cabo < 0) document.getElementById('duelo-res-p2').classList.add('venceu');
+
+  mostrarTela('t-duelo-resultado');
+
+  // Limpar sala do Firestore
+  try {
+    const q = query(collection(db, 'salas'), where('id', '==', salaId));
+    getDocs(q).then(snap => {
+      snap.docs.forEach(d => deleteDoc(d.ref));
+    });
+  } catch(e) {}
+  salaId = null;
+}
+
+async function cancelarSala() {
+  if (salaId) {
+    try {
+      const q = query(collection(db, 'salas'), where('id', '==', salaId));
+      const snap = await getDocs(q);
+      snap.docs.forEach(d => deleteDoc(d.ref));
+    } catch(e) {}
+    salaId = null;
+  }
+  if (salaListener) { salaListener(); salaListener = null; }
+  irParaEntrada();
+}
+
 // ═══ EXPOR FUNÇÕES GLOBAIS (necessário para type="module") ═══
+window.irParaDuelo    = irParaDuelo;
+window.criarSala      = criarSala;
+window.entrarNaSala   = entrarNaSala;
+window.cancelarSala   = cancelarSala;
 window.comecarJogo    = comecarJogo;
 window.responder      = responder;
 window.irParaRanking  = irParaRanking;
