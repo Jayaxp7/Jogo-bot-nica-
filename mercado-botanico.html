@@ -1946,22 +1946,21 @@ function escutarSala(codigo) {
     const docId = snap.id;
 
     // P1 vê p2 aparecer
-    if (meuSlot === 'p1' && sala.p2 && sala.status === 'pronto') {
+    if (meuSlot === 'p1' && sala.p2 && sala.status === 'pronto' && !dueloAtivo) {
       document.getElementById('slot-p2-nome').textContent = sala.p2;
       document.getElementById('slot-p2').classList.add('conectado');
       document.getElementById('espera-status').textContent = sala.p2 + ' entrou! Iniciando...';
       setTimeout(() => iniciarDuelo(sala, docId), 1500);
     }
 
-    // P2 aguarda início
-    if (meuSlot === 'p2' && sala.status === 'pronto') {
+    // P2 — assim que entra e vê status pronto, inicia
+    if (meuSlot === 'p2' && (sala.status === 'pronto' || sala.status === 'jogando') && !dueloAtivo) {
       setTimeout(() => iniciarDuelo(sala, docId), 1500);
     }
 
     // Atualizar cabo de guerra durante jogo
     if (sala.status === 'jogando' && dueloAtivo) {
       atualizarCaboUI(sala);
-      // Verificar fim do duelo
       if (sala.acertosTotal >= TOTAL_ACERTOS_DUELO) {
         finalizarDuelo(sala);
       }
